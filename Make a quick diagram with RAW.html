@@ -1,0 +1,548 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>Make a quick diagram with RAW</title>
+  <link rel="stylesheet" href="steps-make_a_quick_diagram_with_raw/assets/spectre.css"></link>
+
+
+  <style>
+    .fullyHide {
+      display: none !important;
+    }
+    .bg {
+      background-color: #eff0f3;
+    }
+    .headline {
+      color: #0d0d0d;
+    }
+    .topSection {
+      padding: 50px .5rem;
+    }
+    .card {
+      border: 0;
+      box-shadow: 0 0.25rem 1rem rgba(48,55,66,.15);
+      height: 100%;
+      margin-bottom: 3.5rem;
+    }
+    .headerLogo {
+      top: 20px;
+      right: 20px;
+      float: right;
+      z-index: 10;
+      position: fixed;
+      padding: 10px;
+      box-shadow: 0 0.25rem 1rem rgba(48,55,66,.15);
+      background-color: white;
+      cursor: pointer;
+    }
+    .headerLogo a img{
+      border: 0;
+    }
+    .card-header {
+      display: flex;
+    }
+    .card-header, .card-body {
+      padding-left: 2rem !important;
+    }
+    .card-image {
+      text-align: center;
+      padding: 0.5rem;
+    }
+    .card-image img{
+      box-shadow: 0 0.25rem 1rem rgba(48,55,66,.15);
+      /* max-width: 750px; */
+      margin: 0.7rem auto;
+      display: unset !important;
+    }
+    .form-checkbox {
+      display: inline;
+      margin: 0;
+      margin-right: 5px;
+    }
+    input[type="checkbox"], .form-icon {
+      transform:scale(1.5, 1.5);
+    }
+    .stepCard {
+      padding-bottom: 1.5rem;
+      padding-top: 0.5rem;
+    }
+    .stepTitle {
+      display:inline-block;
+    }
+    .substepTitle {
+      font-weight: 600;
+      text-align: center;
+      margin: .8rem 0;
+    }
+
+    .card {
+      border: 2px solid transparent;
+    }
+    .completedCard {
+      border: 2px solid #2a9a39;
+      box-shadow: 0 0.25rem 1rem rgb(43 154 56 / 0.45);
+    }
+
+    .form-checkbox input:checked+.form-icon,
+    .form-radio input:checked+.form-icon,
+    .form-switch input:checked+.form-icon {
+      background: #00c400;
+      border-color: #00c400
+    }
+
+    .form-checkbox input:focus+.form-icon,
+    .form-radio input:focus+.form-icon,
+    .form-switch input:focus+.form-icon {
+      border-color: #00c400;
+      box-shadow: 0 0.25rem 1rem rgb(43 154 56 / 0.2);
+    }
+
+    .form-checkbox input:indeterminate+.form-icon {
+      background: #00c400;
+      border-color: #00c400
+    }
+    .form-checkbox.bottom {
+      margin-bottom: 15px;
+      margin-left: auto;
+      margin-right: 10px;
+      margin-top: 5px;
+    }
+    @media (max-width:992px){
+      p {margin:0}
+      blockquote {margin:0}
+      .container.grid-md {max-width:1296px}
+      .card {margin-bottom:1rem}
+      .col-xs-10,.col-md-10,.col-xl-10 {width:100%}
+    }
+
+    /* KEEP IN SYNC WITH RENDERE/ASSETS/TEXTBLOCK.CSS!!!!!!!!!!! */
+/* ALSO COLORS ARE IN TEXTBLOCK.JS */
+.stepTextBlock {
+  display: flex;
+  border-radius: 0.25em;
+  border-bottom: 3px solid transparent;
+  flex-direction: row;
+  align-items: center;
+  padding: 0.75em;
+  margin: 1em 0em;
+}
+.stepTextBlock.error {
+  border-color: #feb2b2;
+  background-color: #fed7d7;
+}
+.stepTextBlock.info {
+  border-color: #90cdf4;
+  background-color: #bee3f8;
+}
+.stepTextBlock.success {
+  border-color: #9ae6b4;
+  background-color: #c6f6d5;
+}
+.stepTextBlock.warning {
+  border-color: #faf089;
+  background-color: #fefcbf;
+}
+
+.stepTextBlock.dark {
+  border-color: #e5e7eb;
+  background-color: #f9fafb;
+}
+
+.stepTextBlock .stepTextBlockIcon {
+  width: 2.5em;
+  height: 2.5em;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  border: 2px solid transparent;
+  border-radius: 9999px;
+}
+.stepTextBlock.error .stepTextBlockIcon {
+  border-color: #f56565;
+  background-color: #fff5f5;
+  color: #f56565;
+}
+.stepTextBlock.info .stepTextBlockIcon {
+  border-color: #4299e1;
+  background-color: #ebf8ff;
+  color: #4299e1;
+}
+.stepTextBlock.success .stepTextBlockIcon {
+  border-color: #48bb78;
+  background-color: #f0fff4;
+  color: #48bb78;
+}
+.stepTextBlock.warning .stepTextBlockIcon {
+  border-color: #ecc94b;
+  background-color: #fffff0;
+  color: #ecc94b;
+}
+.stepTextBlock.dark .stepTextBlockIcon {
+  border-color: #e5e7eb;
+    /* No BG intentionally */
+  color: #e5e7eb;
+}
+
+.stepTextBlock .stepTextBlockIcon svg{
+  width: 1.5em;
+}
+.stepTextBlock .stepTextBlockContent {
+  margin-left: 1em;
+}
+.stepTextBlock .stepTextBlockTitle {
+  font-size: 1.125em;
+  font-weight: 600;
+}
+.stepTextBlock.error .stepTextBlockTitle {
+  color: #9b2c2c;
+}
+.stepTextBlock.dark .stepTextBlockTitle {
+  color: #212936;
+}
+.stepTextBlock.info .stepTextBlockTitle {
+  color: #2c5282;
+}
+.stepTextBlock.success .stepTextBlockTitle {
+  color: #276749;
+}
+.stepTextBlock.warning .stepTextBlockTitle {
+  color: #975a16;
+}
+.stepTextBlock .stepTextBlockDescription {
+  font-size: .875em;
+}
+.stepTextBlock.error .stepTextBlockDescription {
+  color: #e53e3e;
+}
+.stepTextBlock.info .stepTextBlockDescription {
+  color: #3182ce;
+}
+.stepTextBlock.success .stepTextBlockDescription {
+  color: #38a169;
+}
+.stepTextBlock.warning .stepTextBlockDescription {
+  color: #d69e2e;
+}
+.stepTextBlock.dark .stepTextBlockDescription {
+  color: #1f2937;
+}
+.stepTextBlock .stepTextBlockDescription p {
+  padding: 0;
+  margin: 0;
+}
+
+    .stepTextBlock {
+      margin-left: 5%;
+      margin-right: 5%;
+    }
+
+    
+  </style>
+
+  <script>
+    function initializeToc() {
+      if(typeof tocbot == 'undefined')  {
+        return;
+      }
+      
+      var tocFake = document.getElementsByClassName('tocFake')[0]
+      var tocReal = document.getElementsByClassName('toc')[0];
+
+      /* If js works, then we remove nonJc TOC, show both real and fake tocs
+      */
+      var tocNonJs = document.getElementsByClassName('tocNonJs')[0];
+      tocNonJs.style.display = 'none';
+      tocFake.classList.remove("fullyHide");
+      tocReal.classList.remove("fullyHide");
+
+
+      tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.toc',
+        positionFixedSelector: '.toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.section',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: '.headline',
+        ignoreSelector: '.substep',
+        onClick: function(e) {
+          // After user clicks ToC item, refresh tocbot to properly highlight active item
+          setTimeout(() => {
+            tocbot.refresh();
+          }, 50)
+        },
+        headingsOffset: 5,
+        headingLabelCallback: function(heading, node) {
+          var ancestor = findAncestor(node, 'card');
+          var isCompleted = ancestor && (findAncestor(node, 'card').classList.contains('completedCard'));
+          return (isCompleted ? '✅ ' : '') + heading.trim();
+        }
+      });
+      tocFake.addEventListener('click', function() {
+        toggleClassName(tocFake, 'show-md');
+        toggleClassName(tocReal, 'hide-md');
+      })
+
+    }
+    var exportSettings = {"docTemplate":"default","imageExportPath":"steps-[[gtitle]]/step-[[index]].[[ext]]","format":"png","imageSize":100,"imageAlign":"center","imageSizeMode":"percentage","imageSizeFitWidth":725,"imageSizeFitHeight":700,"oneStepPerPage":false,"includeTOS":false,"includeTOCSubSteps":true,"includeCoverPage":true,"includeNumbers":true,"embeddableExport":false,"embedAssets":false,"textPosition":"top","includeCheckboxes":false,"tocHeadline":"Table of contents","includeFooter":true,"includeHeader":true,"headerText":"Make a quick diagram with RAW","headerLogo":null,"headerLogoLink":null,"headerLogoAlign":"right","footerNumbering":"Page [[Page_Number]]","footerLogo":null,"footerText":"Make a quick diagram with RAW","customCSS":"","pageOrientation":"portrait","pdfPageSize":"A4","filenameMode":"original","footerLogoAlign":"left","pdfStepMode":"mode2","stepImageBorderWidth":0,"stepImageBorderColor":"#a0a0a0","guideTitleAlignment":"center","stepTitleAlignment":"center","targetFormat":"rich","assets":[],"useCustomCoverPagePDF":false,"customCoverPagePDFTemplate":{"canvasOptions":{"backgroundColorEnabled":true,"backgroundColor":"#FFFFFF","width":718,"height":1084},"elements":[{"id":1733056105940,"type":"text","content":"[[Guide_Title]]","name":"Guide Title","left":9,"top":15,"width":80,"height":8,"fontFamily":"Roboto","fontColor":"#000000","fontWeight":"700","fontStyle":"normal","fontSize":32,"underline":false,"orderId":0,"visibility":true,"textFit":false,"textAlign":"center","alignContent":"center","color":"#3b4351"},{"id":1733056124514,"type":"text","content":"[[Guide_Description]]","name":"Guide Description","left":9,"top":25,"width":80,"height":8,"fontFamily":"Roboto","fontColor":"#000000","fontWeight":"400","fontStyle":"normal","fontSize":14,"underline":false,"orderId":1,"visibility":true,"textFit":false,"textAlign":"left","alignContent":"flex-start","color":"#3b4351"}]},"assetsVault":{},"placeholdersVault":{"Guide_Title":"Make a quick diagram with RAW","Guide_Description":"<p>Let's see if we can find correlations in our dataset by building a chart. To do that, we'll use a web-based tool called <a href=\"about:blank\" rel=\"noopener noreferrer\" target=\"_blank\">RAWGraphs</a>.</p><p>You can find our dataset <a href=\"https://docs.google.com/spreadsheets/d/1CYA-IUSRj-1rLpq0L2SZ3yQxPt8Xv5yx26L63re4-2U/edit?usp=sharing\" rel=\"noopener noreferrer\" target=\"_blank\">here</a>.</p><br><p>We'll copy all of our questionnaire data, paste it into RAW, and build an alluvial diagram. If you feel comfortable doing that immediately, feel free to skip this tutorial and get right to it! But if you want step by step instructions, please read on.</p><br>","Guide_CreatedAt":"21-10-2024","Guide_UpdatedAt":"07-10-2026","Date":"07-10-2026"},"preparsed":{"headers":["Make a quick diagram with RAW","Make a quick diagram with RAW","Make a quick diagram with RAW","Make a quick diagram with RAW","Make a quick diagram with RAW","Make a quick diagram with RAW"],"footers":["Make a quick diagram with RAW","Make a quick diagram with RAW","Make a quick diagram with RAW","Make a quick diagram with RAW","Make a quick diagram with RAW","Make a quick diagram with RAW"],"numberings":["Page [[Page_Number]]","Page [[Page_Number]]","Page [[Page_Number]]","Page [[Page_Number]]","Page [[Page_Number]]","Page [[Page_Number]]"]},"fullAssetsPath":"/Applications/Folge.app/Contents/Resources/app.asar/dist/electron/static/templates/html/assets"};
+
+    window.onload = function() {
+
+    }
+    function toggleClassName(element, className) {
+      element.classList.toggle(className);
+    }
+    var scrollTo = (element) => {
+      window.scroll({
+        behavior: 'smooth',
+        left: 0,
+        top: element.offsetTop
+      });
+    }
+    function checkboxListener(checkbox) {
+      checkbox.addEventListener('change', function(event) {
+        var stepId = event.target.getAttribute('data-step-id');
+        var stepIdParts = stepId.split('-');
+        var isChecked = event.target.checked
+        var cardNode = document.querySelector('.card[data-step-id="'+stepId+'"]');
+        cardNode.classList.toggle('completedCard');
+        
+        if(isChecked) {
+          var nextId = parseInt(stepIdParts[1]) + 1;
+          var nextCardNode = document.querySelector('.card[data-step-id="step-'+nextId+'"]');
+          if(nextCardNode) {
+            scrollTo(nextCardNode);
+          }
+        }
+        tocbot.refresh();
+      })
+    }
+    function findAncestor (el, cls) {
+        while ((el = el && el.parentElement) && !el.classList.contains(cls));
+        return el;
+    }
+  </script>
+
+</head>
+
+
+<body class="bg">
+  <div class="topSection">
+    <div class="container grid-md text-center guideDetailsWrapper">
+      <div class="columns flex-centered">
+        <div class="column col-xs-10 col-md-10 col-xl-10">
+          <h2 class="headline title">Make a quick diagram with RAW</h2>
+            <span class="description quillClasses"><p>Let's see if we can find correlations in our dataset by building a chart. To do that, we'll use a web-based tool called <a href="about:blank" rel="noopener noreferrer" target="_blank">RAWGraphs</a>.</p><p>You can find our dataset <a href="https://docs.google.com/spreadsheets/d/1CYA-IUSRj-1rLpq0L2SZ3yQxPt8Xv5yx26L63re4-2U/edit?usp=sharing" rel="noopener noreferrer" target="_blank">here</a>.</p><br><p>We'll copy all of our questionnaire data, paste it into RAW, and build an alluvial diagram. If you feel comfortable doing that immediately, feel free to skip this tutorial and get right to it! But if you want step by step instructions, please read on.</p><br></span>
+        </div>
+     </div>
+    </div>
+  </div>
+  <div class="section">
+      <div class="container grid-md">
+        <div class="columns flex-centered">
+          <div class="column col-xs-10 col-md-10 col-xl-10">
+            <div class="card stepCard" data-step-id="step-1">
+    
+              <div class="card-header card-title h5   headline     " id="step-1">
+                <div class="stepTitle">
+                    <b class="stepTitleNumber">1. </b>
+                <span class="stepTitleText">Copy all of our questionnaire data</span>
+                </div>
+              </div>
+
+
+                                  <div class="card-body stepDescription quillClasses"><p>First, click <a href="https://docs.google.com/spreadsheets/d/17G_79dK2zPwZsQr33PJDCphKz9XK5fx4HTqmygjad7s/edit?usp=sharing" rel="noopener noreferrer" target="_blank">here</a> to open our dataset.</p><br><p>To select all of the data in our spreadsheet, press <strong>⌘</strong>&nbsp;<strong>a</strong> (<strong>control a</strong> on a PC).</p><br><p>Then, to copy all of the data, press <strong>⌘</strong>&nbsp;<strong>c</strong> (<strong>control c</strong> on a PC).</p></div>
+              
+                <div class="card-image">
+                                  <img 
+                  alt="Copy all of our questionnaire data" 
+                  class="img-responsive stepImage" 
+        
+                  src="steps-make_a_quick_diagram_with_raw/step-0.png" 
+        
+                />
+                </div>
+
+              
+
+
+
+
+
+            </div>
+          </div>
+        </div>
+        <div class="columns flex-centered">
+          <div class="column col-xs-10 col-md-10 col-xl-10">
+            <div class="card stepCard" data-step-id="step-2">
+    
+              <div class="card-header card-title h5   headline     " id="step-2">
+                <div class="stepTitle">
+                    <b class="stepTitleNumber">2. </b>
+                <span class="stepTitleText">Open RAWGraphs</span>
+                </div>
+              </div>
+
+
+                                  <div class="card-body stepDescription quillClasses"><p>G<span style="background-color: rgb(255, 255, 255);">o to </span><a href="about:blank" rel="noopener noreferrer" target="_blank" style="background-color: rgb(255, 255, 255);">www.rawgraphs.io</a><span style="background-color: rgb(255, 255, 255);"> and click on </span></p><p><strong style="background-color: rgb(255, 255, 255);">Use it now!</strong></p><br><p>RAWGraphs is a web-based tool for visualizing CSV data.</p><br></div>
+              
+                <div class="card-image">
+                                  <img 
+                  alt="Open RAWGraphs" 
+                  class="img-responsive stepImage" 
+        
+                  src="steps-make_a_quick_diagram_with_raw/step-1.png" 
+        
+                />
+                </div>
+
+              
+
+
+
+
+
+            </div>
+          </div>
+        </div>
+        <div class="columns flex-centered">
+          <div class="column col-xs-10 col-md-10 col-xl-10">
+            <div class="card stepCard" data-step-id="step-3">
+    
+              <div class="card-header card-title h5   headline     " id="step-3">
+                <div class="stepTitle">
+                    <b class="stepTitleNumber">3. </b>
+                <span class="stepTitleText">Paste your data</span>
+                </div>
+              </div>
+
+
+                                  <div class="card-body stepDescription quillClasses"><p>Place your cursor in the empty box and press <strong>command v</strong> (<strong>control v</strong> on a PC) to paste in all the data you copied in the first step. Once you do that, your screen should look like the accompanying image.</p></div>
+              
+                <div class="card-image">
+                                  <img 
+                  alt="Paste your data" 
+                  class="img-responsive stepImage" 
+        
+                  src="steps-make_a_quick_diagram_with_raw/step-2.png" 
+        
+                />
+                </div>
+
+              
+
+
+
+
+
+            </div>
+          </div>
+        </div>
+        <div class="columns flex-centered">
+          <div class="column col-xs-10 col-md-10 col-xl-10">
+            <div class="card stepCard" data-step-id="step-4">
+    
+              <div class="card-header card-title h5   headline     " id="step-4">
+                <div class="stepTitle">
+                    <b class="stepTitleNumber">4. </b>
+                <span class="stepTitleText">Choose a chart</span>
+                </div>
+              </div>
+
+
+                                  <div class="card-body stepDescription quillClasses"><p>Scroll down to see the list of charts RAWGraphs makes available. As you can see, there are a lot of charts! But they won't all work well with the kind of data we have.</p><br><p>Let's start with the <strong>Alluvial Diagram<em>.</em></strong><em> </em>If it's already selected, move on to the next step.</p><br></div>
+              
+                <div class="card-image">
+                                  <img 
+                  alt="Choose a chart" 
+                  class="img-responsive stepImage" 
+        
+                  src="steps-make_a_quick_diagram_with_raw/step-3.png" 
+        
+                />
+                </div>
+
+              
+
+
+
+
+
+            </div>
+          </div>
+        </div>
+        <div class="columns flex-centered">
+          <div class="column col-xs-10 col-md-10 col-xl-10">
+            <div class="card stepCard" data-step-id="step-5">
+    
+              <div class="card-header card-title h5   headline     " id="step-5">
+                <div class="stepTitle">
+                    <b class="stepTitleNumber">5. </b>
+                <span class="stepTitleText">Build your chart</span>
+                </div>
+              </div>
+
+
+                                  <div class="card-body stepDescription quillClasses"><p>Scroll down to the <strong>Mapping</strong> section.</p><br><p>Let's tell RAW which columns to include in our chart. Drag some of the rectangles on the left onto the <strong>Steps</strong> box in the middle. (They should all work, except the last two.) Start with two or three. You don't need to put anything in the box labeled <strong>Size</strong>.</p></div>
+              
+                <div class="card-image">
+                                  <img 
+                  alt="Build your chart" 
+                  class="img-responsive stepImage" 
+        
+                  src="steps-make_a_quick_diagram_with_raw/step-4.png" 
+        
+                />
+                </div>
+
+              
+
+
+
+
+
+            </div>
+          </div>
+        </div>
+        <div class="columns flex-centered">
+          <div class="column col-xs-10 col-md-10 col-xl-10">
+            <div class="card stepCard" data-step-id="step-6">
+    
+              <div class="card-header card-title h5   headline     " id="step-6">
+                <div class="stepTitle">
+                    <b class="stepTitleNumber">6. </b>
+                <span class="stepTitleText">Admire your chart!</span>
+                </div>
+              </div>
+
+
+                                  <div class="card-body stepDescription quillClasses"><p>Scroll down to see your alluvial diagram! You can play with the colors by clicking on the <strong>Colors</strong> section.</p><br><p>Try scrolling back up, changing the categories, and making a new chart! </p><br><p>Feel free to play with the other chart types, too. You'll quickly notice that some of them work and some of them don't. For example, if you choose <strong>Pie</strong>, you'll see a message telling you that "You can't map strings on Arcs." (A "string" is a set of characters.) The message means that for this type of chart, RAW needs numbers, not text. So to make a pie chart, you'll need to first summarize the data by adding up all the unique values. But don't worry about that now!</p><br></div>
+              
+                <div class="card-image">
+                                  <img 
+                  alt="Admire your chart!" 
+                  class="img-responsive stepImage" 
+        
+                  src="steps-make_a_quick_diagram_with_raw/step-5.png" 
+        
+                />
+                </div>
+
+              
+
+
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</body>
+</html>
